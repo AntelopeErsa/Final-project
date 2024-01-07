@@ -32,14 +32,20 @@ export class UI {
             context.font = this.fontSize * 1 + 'px ' + this.fontFamily;
             if (this.game.score > this.game.requiredScore){
                 context.fillText('YOU ROCK!!', this.game.width * 0.5, this.game.height * 0.5);
+                backmusic.pause();
+                win.play(); 
             } else {
                 context.fillText('SKILL ISSUE LOSER', this.game.width * 0.5, this.game.height * 0.5);
+                backmusic.pause();
+                go.play();
             }
         }
         if (this.game.lives <= 0) {
             context.textAlign = 'center';
             context.font = this.fontSize * 1 + 'px ' + this.fontFamily;
             context.fillText('SKILL ISSUE LOSER', this.game.width * 0.5, this.game.height * 0.5);
+            backmusic.pause();
+            go.play();
         }
         //required
         context.textAlign = 'right';

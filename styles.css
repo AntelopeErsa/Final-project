@@ -30,3 +30,10 @@ img {
 body {
     background: conic-gradient(from 45deg, pink, rgb(119, 37, 119));
 }
+
+#audioon {
+    background: transparent;
+    border: none;
+    font-size: 100px;
+    width: 100px;
+}

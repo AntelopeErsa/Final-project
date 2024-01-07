@@ -1,6 +1,7 @@
 import { Sitting, Running, Jumping, Falling, Rolling, Diving, Hit } from './playerState.js';
 import { CollisionAnimation } from './collisionAnim.js';
 import { FloatingMessage } from './floatingMessages.js';
+import { BoomText } from './boom.js';
 
 export class Player {
     constructor(game){
@@ -78,7 +79,14 @@ export class Player {
                 this.energyCounter += deltaTime;
             }
         }
-        console.log(this.energy)
+        //loss of life
+        if (this.game.lives <= 0) {
+            this.game.gameOver = true;
+        }
+        //boom animation
+        if (this.currentState === this.states[5] && this.onGround()){
+            this.game.booms.push(new BoomText('BOOM!', this.x, this.y))
+        }
     }
 
     draw(context){
@@ -111,6 +119,7 @@ export class Player {
                     this.game.lives--;
                     if (this.game.lives <= 0) this.game.gameOver = true;
                 }
+                smack.play();
             }
         });
     }

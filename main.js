@@ -12,6 +12,20 @@ window.addEventListener('load', function(){
     canvas.height = 500;
     const fullScreenButton = this.document.getElementById('fullScreenButton');
 
+    let audioControl = false;
+    backmusic.loop = true;
+
+    audioon.addEventListener('click', function(){
+        if (!audioControl){
+            audioControl = true;
+            backmusic.play();
+        } else {
+            audioControl = false;
+            backmusic.pause();
+        }
+
+    })
+
     class Game {
         constructor(width, height){
             this.width = width;
@@ -27,6 +41,7 @@ window.addEventListener('load', function(){
             this.particles = [];
             this.collisions = [];
             this.floatingMessages = [];
+            this.booms = [];
             this.restart = [];
             this.maxParticles = 50;
             this.enemyTimer = 0;
@@ -76,6 +91,12 @@ window.addEventListener('load', function(){
                 if (collision.markedForDeletion)  this.collisions.splice(index, 1);
             });
             this.floatingMessages = this.floatingMessages.filter(message => !message.markedForDeletion);
+            //booms
+            this.booms.forEach((booms, index) => {
+                booms.update();
+                if (booms.markedForDeletion)
+                this.booms.splice(index, 1);
+            })
         }
         draw(context){
             this.background.draw(context);
@@ -92,6 +113,9 @@ window.addEventListener('load', function(){
             this.floatingMessages.forEach(message => {
                 message.draw(context);
             });
+            this.booms.forEach(message => {
+                message.draw(context);
+            })
             this.UI.draw(context);
         }
         addEnemy(){
